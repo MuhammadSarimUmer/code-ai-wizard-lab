@@ -4,6 +4,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AIMentor as AIMentorComponent } from './components/ai/AIMentor'; // Rename this import
+import { ProjectGenerator } from './components/projects/ProjectGenerator';
+
 
 import MainLayout from "@/components/layouts/MainLayout";
 import Index from "./pages/Index";
@@ -28,12 +31,12 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainLayout><Index /></MainLayout>} />
-          <Route path="/ai-mentor" element={<MainLayout><AIMentor /></MainLayout>} />
+        <Route path="/" element={<MainLayout><Index /></MainLayout>} />
+        <Route path="/ai-mentor" element={<MainLayout><AIMentorComponent /></MainLayout>} />
           <Route path="/learning-paths" element={<MainLayout><LearningPaths /></MainLayout>} />
           <Route path="/learning-paths/:language" element={<MainLayout><LanguageLearning /></MainLayout>} />
           <Route path="/skill-map" element={<MainLayout><SkillMap /></MainLayout>} />
-          <Route path="/projects" element={<MainLayout><Projects /></MainLayout>} />
+          <Route path="/projects" element={<MainLayout><ProjectGenerator /></MainLayout>} />
           <Route path="/editor" element={<MainLayout><CodeEditor /></MainLayout>} />
           <Route path="/interview" element={<MainLayout><Interview /></MainLayout>} />
           <Route path="/flow-designer" element={<MainLayout><FlowDesigner /></MainLayout>} />
