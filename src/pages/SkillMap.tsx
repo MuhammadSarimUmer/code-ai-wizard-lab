@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Brain, Award, Code2, FileJson, FilePieChart, FileTerminal, Puzzle, Terminal } from "lucide-react";
+import { Brain, Award, Code2, FileJson, FilePieChart, FileTerminal, Puzzle, Terminal, FileCode2 } from "lucide-react";
 
 // Mock data
 const skillCategories = [
@@ -14,7 +14,7 @@ const skillCategories = [
       { name: "Python", progress: 65, icon: FileTerminal, color: "bg-blue-500" },
       { name: "JavaScript", progress: 48, icon: FileJson, color: "bg-yellow-500" },
       { name: "C#", progress: 32, icon: FilePieChart, color: "bg-purple-500" },
-      { name: "C++", progress: 20, icon: FileCode, color: "bg-red-500" },
+      { name: "C++", progress: 20, icon: FileCode2, color: "bg-red-500" },
       { name: "C", progress: 15, icon: Terminal, color: "bg-gray-500" }
     ]
   },
