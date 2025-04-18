@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { BrainCircuit, Download, FileJson, FileTerminal, FilePieChart, FileCode2, Terminal, Clock, Sparkles, FileText } from "lucide-react";
+import { BrainCircuit, Download, FileJson, FileTerminal, FilePieChart, FileCode2, Terminal, Clock, Sparkles, FileText, CheckCircle2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 const projectTemplates = [
@@ -92,7 +91,6 @@ const Projects = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Filter projects based on search and filters
   const filteredProjects = projectTemplates.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                          project.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -118,7 +116,6 @@ const Projects = () => {
 
     setIsGenerating(true);
 
-    // Simulate AI project generation
     setTimeout(() => {
       setIsGenerating(false);
       setGeneratedPdf(`${projectName.replace(/\s+/g, '-').toLowerCase()}-project-plan.pdf`);
@@ -134,7 +131,6 @@ const Projects = () => {
       title: "Viewing PDF",
       description: `Opening ${generatedPdf} in a new tab.`,
     });
-    // This would actually open the PDF in a real implementation
   };
 
   const handleDownloadPdf = () => {

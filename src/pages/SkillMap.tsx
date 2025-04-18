@@ -95,7 +95,7 @@ const SkillMap = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {category.skills.map((skill, index) => (
                     <Card key={index} className="overflow-hidden">
-                      <div className={`h-1 ${skill.color}`} style={{ width: `${skill.progress}%` }}></div>
+                      <div className={`h-1 ${skill.color}`} style={{ width: `100%` }}></div>
                       <CardContent className="p-6">
                         <div className="flex items-center gap-4">
                           <div className={`w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center`}>
@@ -103,7 +103,7 @@ const SkillMap = () => {
                           </div>
                           <div className="flex-grow">
                             <div className="flex justify-between items-center mb-2">
-                              <h3 className="font-medium">{skill.name}</h3>
+                              <h3 className="font-medium text-base">{skill.name}</h3>
                               <span className="text-sm text-muted-foreground">{skill.progress}%</span>
                             </div>
                             <Progress value={skill.progress} className="h-2" />

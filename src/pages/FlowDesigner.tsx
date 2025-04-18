@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,9 +34,7 @@ const FlowDesigner = () => {
     setIsGenerating(true);
     setGenerated(false);
 
-    // AI processing logic for generating flowcharts
     setTimeout(() => {
-      // This would be replaced with actual AI-generated flowchart content
       const generatedFlowChart = generateFlowChartFromCode(code, flowType, layoutType);
       setFlowchart(generatedFlowChart);
       setIsGenerating(false);
@@ -49,14 +46,15 @@ const FlowDesigner = () => {
     }, 2000);
   };
 
-  // Mock function to generate a flowchart based on code
   const generateFlowChartFromCode = (code: string, type: string, layout: string) => {
-    // This would be replaced with actual AI processing
-    // For now, we'll return a structured representation
     if (code.includes("factorial")) {
       return "factorial-flowchart";
     } else if (code.includes("for") || code.includes("while")) {
       return "loop-flowchart";
+    } else if (code.includes("if") || code.includes("else")) {
+      return "conditional-flowchart";
+    } else if (code.includes("function") || code.includes("=>")) {
+      return "function-flowchart";
     } else {
       return "generic-flowchart";
     }
@@ -146,6 +144,73 @@ const FlowDesigner = () => {
               </div>
             </div>
             <div className="border-2 border-primary rounded-lg px-4 py-2 mt-8 mx-auto w-fit">
+              End
+            </div>
+          </div>
+        </div>
+      );
+    } else if (flowchart === "conditional-flowchart") {
+      return (
+        <div className="border border-muted-foreground/20 rounded-lg p-4 bg-white">
+          <div className="mx-auto w-fit p-4">
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Start
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Process Inputs
+            </div>
+            <div className="border-2 border-primary bg-muted/20 transform rotate-45 mb-4 mx-auto w-fit p-6">
+              <div className="transform -rotate-45">
+                Condition?
+              </div>
+            </div>
+            <div className="flex justify-center gap-16">
+              <div className="text-center">
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="mb-1">True</div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  If Block Executes
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="mb-1">False</div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  Else Block Executes
+                </div>
+              </div>
+            </div>
+            <div className="border-t-2 border-primary w-32 mx-auto"></div>
+            <div className="border-l-2 border-primary h-6 mx-auto"></div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mt-4 mx-auto w-fit">
+              Continue Execution
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mt-4 mx-auto w-fit">
+              End
+            </div>
+          </div>
+        </div>
+      );
+    } else if (flowchart === "function-flowchart") {
+      return (
+        <div className="border border-muted-foreground/20 rounded-lg p-4 bg-white">
+          <div className="mx-auto w-fit p-4">
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Start
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Function Declaration
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Process Input Parameters
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Function Body
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Return Value
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mt-4 mx-auto w-fit">
               End
             </div>
           </div>
