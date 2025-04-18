@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Brain, Certificate, Code2, FileJson, FilePieChart, FileTerminal, Puzzle, Terminal } from "lucide-react";
+import { Brain, Award, Code2, FileJson, FilePieChart, FileTerminal, Puzzle, Terminal } from "lucide-react";
 
 // Mock data
 const skillCategories = [
@@ -45,7 +44,7 @@ const skillCategories = [
 
 // Mock achievements
 const achievements = [
-  { name: "Python Basics Mastery", description: "Completed all basic Python modules", icon: Certificate },
+  { name: "Python Basics Mastery", description: "Completed all basic Python modules", icon: Award },
   { name: "Algorithm Expert", description: "Solved 20 algorithm challenges", icon: Brain },
   { name: "Code Streak", description: "Practiced for 7 consecutive days", icon: Code2 }
 ];
