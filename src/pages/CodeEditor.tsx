@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,7 +9,7 @@ import {
   Clock, 
   Code2, 
   Copy, 
-  FlowArrow, 
+  ArrowRightLeft, 
   Play, 
   RefreshCcw, 
   Save, 
@@ -293,7 +292,7 @@ int main() {
                   </>
                 ) : (
                   <>
-                    <FlowArrow className="mr-2 h-4 w-4" />
+                    <ArrowRightLeft className="mr-2 h-4 w-4" />
                     Generate Flowchart
                   </>
                 )}

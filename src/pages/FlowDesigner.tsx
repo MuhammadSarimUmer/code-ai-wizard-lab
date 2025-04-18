@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { FileDown, FlowArrow, Image, RefreshCcw } from "lucide-react";
+import { FileDown, ArrowRightLeft, Image, RefreshCcw } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 const FlowDesigner = () => {
@@ -111,7 +110,7 @@ const FlowDesigner = () => {
                 </>
               ) : (
                 <>
-                  <FlowArrow className="mr-2 h-4 w-4" />
+                  <ArrowRightLeft className="mr-2 h-4 w-4" />
                   Generate Flowchart
                 </>
               )}
@@ -195,7 +194,7 @@ const FlowDesigner = () => {
                 </div>
               ) : (
                 <div className="text-center text-muted-foreground">
-                  <FlowArrow className="h-16 w-16 mx-auto mb-4 opacity-20" />
+                  <ArrowRightLeft className="h-16 w-16 mx-auto mb-4 opacity-20" />
                   <p>Enter your code and click generate to create a flowchart</p>
                 </div>
               )}

@@ -6,7 +6,7 @@ import {
   BrainCircuit, 
   Code2, 
   FileSpreadsheet, 
-  FlowArrow, 
+  ArrowRightLeft, 
   GraduationCap, 
   Home, 
   MessagesSquare,
@@ -63,7 +63,7 @@ const links = [
   },
   {
     title: "Flow Designer",
-    icon: FlowArrow,
+    icon: ArrowRightLeft,
     path: "/flow-designer",
   },
   {

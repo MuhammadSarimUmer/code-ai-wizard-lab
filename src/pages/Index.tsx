@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BrainCircuit, Code2, FileSpreadsheet, FlowArrow, GraduationCap, Heart, Lightbulb } from "lucide-react";
+import { BrainCircuit, Code2, FileSpreadsheet, ArrowRightLeft, GraduationCap, Heart, Lightbulb } from "lucide-react";
 
 import FeatureCard from "@/components/home/FeatureCard";
 import ProgressSection from "@/components/home/ProgressSection";
@@ -87,7 +86,7 @@ const Index = () => {
                           Practice Coding
                         </Button>
                         <Button variant="outline" className="justify-start">
-                          <FlowArrow className="mr-2 h-4 w-4" />
+                          <ArrowRightLeft className="mr-2 h-4 w-4" />
                           Generate Flowchart
                         </Button>
                       </div>
