@@ -15,7 +15,8 @@ import {
   PanelLeft, 
   Send, 
   TerminalSquare,
-  Trash
+  Trash,
+  CheckCircle2
 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
@@ -55,12 +56,36 @@ const AIMentor = () => {
     setInput('');
     setIsLoading(true);
 
-    // Mock AI response
+    // AI response logic - would be connected to a real AI service
     setTimeout(() => {
+      const aiResponses: {[key: string]: string} = {
+        "help": "I'd be happy to help you! What programming language or concept are you working with?",
+        "python": "Python is a versatile programming language known for its readability and wide range of applications. What specific aspect of Python would you like to learn about?",
+        "javascript": "JavaScript is the language of the web. It allows you to create interactive elements on websites. What part of JavaScript are you interested in?",
+        "error": "To help debug your error, I'll need to see the code and error message. Could you share the relevant code snippet?",
+        "algorithm": "Algorithms are step-by-step procedures for solving problems. There are many types like sorting, searching, and graph algorithms. Which one interests you?"
+      };
+      
+      // Analyze input to determine appropriate response
+      const lowerInput = input.toLowerCase();
+      let responseContent = "I'll help you with that. Could you provide more details about what you're working on?";
+      
+      if (lowerInput.includes("help")) {
+        responseContent = aiResponses.help;
+      } else if (lowerInput.includes("python")) {
+        responseContent = aiResponses.python;
+      } else if (lowerInput.includes("javascript") || lowerInput.includes("js")) {
+        responseContent = aiResponses.javascript;
+      } else if (lowerInput.includes("error") || lowerInput.includes("bug") || lowerInput.includes("fix")) {
+        responseContent = aiResponses.error;
+      } else if (lowerInput.includes("algorithm")) {
+        responseContent = aiResponses.algorithm;
+      }
+
       const newAssistantMessage: Message = {
         id: messages.length + 2,
         role: 'assistant',
-        content: `I'll help you with "${input}". This is a mock response since we're simulating the AI functionality. In a real implementation, this would connect to an AI service.`,
+        content: responseContent,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, newAssistantMessage]);
@@ -76,12 +101,12 @@ const AIMentor = () => {
         description: `${file.name} has been uploaded and is being analyzed.`,
       });
       
-      // Mock file processing
+      // AI file analysis logic - would be connected to a real AI service
       setTimeout(() => {
         const newAssistantMessage: Message = {
           id: messages.length + 1,
           role: 'assistant',
-          content: `I've analyzed ${file.name}. It looks like a well-structured file. Is there anything specific you'd like me to explain or modify?`,
+          content: `I've analyzed ${file.name}. It looks like a well-structured ${file.name.split('.').pop()} file. Is there anything specific you'd like me to explain or modify?`,
           timestamp: new Date(),
         };
         setMessages(prev => [...prev, newAssistantMessage]);
@@ -104,6 +129,10 @@ const AIMentor = () => {
     });
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+  };
+
   return (
     <div className="flex h-[calc(100vh-6rem)] overflow-hidden">
       {/* Sidebar */}
@@ -120,13 +149,25 @@ const AIMentor = () => {
             <div className="space-y-2">
               <h3 className="text-sm font-medium text-muted-foreground">Recent chats</h3>
               <div className="space-y-1">
-                <Button variant="ghost" className="w-full justify-start text-xs h-auto py-1.5">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-xs h-auto py-1.5"
+                  onClick={() => handleSuggestionClick("How do I use Python list comprehensions?")}
+                >
                   Python list comprehensions
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-xs h-auto py-1.5">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-xs h-auto py-1.5"
+                  onClick={() => handleSuggestionClick("Explain JavaScript async functions")}
+                >
                   JavaScript async functions
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-xs h-auto py-1.5">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-xs h-auto py-1.5"
+                  onClick={() => handleSuggestionClick("Help with C++ memory management")}
+                >
                   C++ memory management
                 </Button>
               </div>
@@ -264,10 +305,34 @@ const AIMentor = () => {
           </Tabs>
           
           <div className="flex flex-wrap gap-2 mt-2">
-            <Badge variant="outline" className="cursor-pointer hover:bg-secondary">Help me debug this code</Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-secondary">Explain this concept</Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-secondary">Optimize this algorithm</Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-secondary">Generate a code example</Badge>
+            <Badge 
+              variant="outline" 
+              className="cursor-pointer hover:bg-secondary"
+              onClick={() => handleSuggestionClick("Help me debug this code")}
+            >
+              Help me debug this code
+            </Badge>
+            <Badge 
+              variant="outline" 
+              className="cursor-pointer hover:bg-secondary"
+              onClick={() => handleSuggestionClick("Explain this concept")}
+            >
+              Explain this concept
+            </Badge>
+            <Badge 
+              variant="outline" 
+              className="cursor-pointer hover:bg-secondary"
+              onClick={() => handleSuggestionClick("Optimize this algorithm")}
+            >
+              Optimize this algorithm
+            </Badge>
+            <Badge 
+              variant="outline" 
+              className="cursor-pointer hover:bg-secondary"
+              onClick={() => handleSuggestionClick("Generate a code example")}
+            >
+              Generate a code example
+            </Badge>
           </div>
         </div>
       </div>

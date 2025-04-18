@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Code, FileCode, FileJson, FilePieChart, FileTerminal } from "lucide-react";
+import { FileTerminal, FileJson, FilePieChart, FileCode2, Terminal } from "lucide-react";
 
 const languages = [
   {
@@ -26,14 +26,14 @@ const languages = [
   },
   {
     name: "C++",
-    icon: FileCode,
+    icon: FileCode2,
     color: "bg-red-500/80",
     path: "/learning-paths/cpp",
     progress: 20
   },
   {
     name: "C",
-    icon: Code,
+    icon: Terminal,
     color: "bg-gray-500/80",
     path: "/learning-paths/c",
     progress: 15

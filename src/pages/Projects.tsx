@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { BrainCircuit, Download, FileJson, FileTerminal, FilePieChart, FileCode, Terminal, Clock, Sparkles } from "lucide-react";
+import { BrainCircuit, Download, FileJson, FileTerminal, FilePieChart, FileCode2, Terminal, Clock, Sparkles, FileText } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 const projectTemplates = [
@@ -78,7 +78,7 @@ const languageIcons = {
   python: FileTerminal,
   javascript: FileJson,
   csharp: FilePieChart,
-  cpp: FileCode,
+  cpp: FileCode2,
   c: Terminal
 };
 
@@ -88,6 +88,23 @@ const Projects = () => {
   const [projectDescription, setProjectDescription] = useState("");
   const [projectLanguage, setProjectLanguage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedPdf, setGeneratedPdf] = useState<string | null>(null);
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter projects based on search and filters
+  const filteredProjects = projectTemplates.filter(project => {
+    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         project.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    if (selectedFilter === "all") return matchesSearch;
+    if (selectedFilter === "beginner") return matchesSearch && project.difficulty === "Beginner";
+    if (selectedFilter === "intermediate") return matchesSearch && project.difficulty === "Intermediate";
+    if (selectedFilter === "advanced") return matchesSearch && project.difficulty === "Advanced";
+    if (selectedFilter === "web") return matchesSearch && project.category === "Web Application";
+    
+    return matchesSearch;
+  });
 
   const handleGenerate = () => {
     if (!projectName.trim() || !projectDescription.trim() || !projectLanguage) {
@@ -104,11 +121,27 @@ const Projects = () => {
     // Simulate AI project generation
     setTimeout(() => {
       setIsGenerating(false);
+      setGeneratedPdf(`${projectName.replace(/\s+/g, '-').toLowerCase()}-project-plan.pdf`);
       toast({
         title: "Project Generated!",
-        description: "Your custom project has been created. Check your downloads.",
+        description: "Your custom project has been created and is ready for download.",
       });
     }, 2500);
+  };
+
+  const handleViewPdf = () => {
+    toast({
+      title: "Viewing PDF",
+      description: `Opening ${generatedPdf} in a new tab.`,
+    });
+    // This would actually open the PDF in a real implementation
+  };
+
+  const handleDownloadPdf = () => {
+    toast({
+      title: "Project Downloaded",
+      description: `${generatedPdf} has been saved to your downloads folder.`,
+    });
   };
 
   const handleDownload = (projectId: string) => {
@@ -136,11 +169,16 @@ const Projects = () => {
               <div className="space-y-4">
                 <div>
                   <Label htmlFor="search">Search</Label>
-                  <Input id="search" placeholder="Find projects..." />
+                  <Input 
+                    id="search" 
+                    placeholder="Find projects..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="language">Language</Label>
-                  <Select>
+                  <Select defaultValue="all">
                     <SelectTrigger id="language">
                       <SelectValue placeholder="All Languages" />
                     </SelectTrigger>
@@ -156,7 +194,10 @@ const Projects = () => {
                 </div>
                 <div>
                   <Label htmlFor="difficulty">Difficulty</Label>
-                  <Select>
+                  <Select 
+                    value={selectedFilter}
+                    onValueChange={setSelectedFilter}
+                  >
                     <SelectTrigger id="difficulty">
                       <SelectValue placeholder="All Levels" />
                     </SelectTrigger>
@@ -170,7 +211,7 @@ const Projects = () => {
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <Select>
+                  <Select defaultValue="all">
                     <SelectTrigger id="category">
                       <SelectValue placeholder="All Categories" />
                     </SelectTrigger>
@@ -189,7 +230,7 @@ const Projects = () => {
 
             <div className="flex-1">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projectTemplates.map(project => (
+                {filteredProjects.map(project => (
                   <Card key={project.id} className="overflow-hidden flex flex-col">
                     <div className="h-40 overflow-hidden">
                       <img 
@@ -292,23 +333,56 @@ const Projects = () => {
                     </Select>
                   </div>
                   
-                  <Button 
-                    className="w-full"
-                    disabled={isGenerating}
-                    onClick={handleGenerate}
-                  >
-                    {isGenerating ? (
-                      <>
-                        <BrainCircuit className="mr-2 h-4 w-4 animate-spin" />
-                        Generating Project...
-                      </>
-                    ) : (
-                      <>
-                        <BrainCircuit className="mr-2 h-4 w-4" />
-                        Generate Project
-                      </>
-                    )}
-                  </Button>
+                  {!generatedPdf ? (
+                    <Button 
+                      className="w-full"
+                      disabled={isGenerating}
+                      onClick={handleGenerate}
+                    >
+                      {isGenerating ? (
+                        <>
+                          <BrainCircuit className="mr-2 h-4 w-4 animate-spin" />
+                          Generating Project...
+                        </>
+                      ) : (
+                        <>
+                          <BrainCircuit className="mr-2 h-4 w-4" />
+                          Generate Project
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="flex items-center p-3 border rounded-md bg-muted/20">
+                        <FileText className="h-8 w-8 text-primary mr-3" />
+                        <div className="flex-grow">
+                          <p className="font-medium">{generatedPdf}</p>
+                          <p className="text-xs text-muted-foreground">Generated project plan</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" className="flex-1" onClick={handleViewPdf}>
+                          View PDF
+                        </Button>
+                        <Button className="flex-1" onClick={handleDownloadPdf}>
+                          <Download className="mr-2 h-4 w-4" />
+                          Download PDF
+                        </Button>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        onClick={() => {
+                          setProjectName("");
+                          setProjectDescription("");
+                          setProjectLanguage("");
+                          setGeneratedPdf(null);
+                        }}
+                      >
+                        Create Another Project
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="bg-muted/30 rounded-lg p-6">
@@ -335,6 +409,18 @@ const Projects = () => {
                       </p>
                     </div>
                   </div>
+
+                  {generatedPdf && (
+                    <div className="mt-6 bg-green-50 dark:bg-green-900/20 p-3 rounded-md border border-green-200 dark:border-green-800">
+                      <h4 className="font-medium text-sm text-green-800 dark:text-green-300 flex items-center">
+                        <CheckCircle2 className="h-4 w-4 mr-2" />
+                        Project Generated Successfully!
+                      </h4>
+                      <p className="text-xs text-green-700 dark:text-green-400 mt-1">
+                        Your project plan has been generated and is ready for download. The PDF contains all the details you need to start building.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>

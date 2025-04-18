@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { FileDown, ArrowRightLeft, Image, RefreshCcw } from "lucide-react";
+import { FileDown, ArrowRightLeft, Image, RefreshCcw, Code2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 const FlowDesigner = () => {
@@ -19,6 +20,7 @@ const FlowDesigner = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [layoutType, setLayoutType] = useState("vertical");
   const [generated, setGenerated] = useState(false);
+  const [flowchart, setFlowchart] = useState<string | null>(null);
 
   const generateFlowchart = () => {
     if (!code.trim()) {
@@ -33,8 +35,11 @@ const FlowDesigner = () => {
     setIsGenerating(true);
     setGenerated(false);
 
-    // Simulate flowchart generation
+    // AI processing logic for generating flowcharts
     setTimeout(() => {
+      // This would be replaced with actual AI-generated flowchart content
+      const generatedFlowChart = generateFlowChartFromCode(code, flowType, layoutType);
+      setFlowchart(generatedFlowChart);
       setIsGenerating(false);
       setGenerated(true);
       toast({
@@ -42,6 +47,133 @@ const FlowDesigner = () => {
         description: "Your flowchart has been successfully created.",
       });
     }, 2000);
+  };
+
+  // Mock function to generate a flowchart based on code
+  const generateFlowChartFromCode = (code: string, type: string, layout: string) => {
+    // This would be replaced with actual AI processing
+    // For now, we'll return a structured representation
+    if (code.includes("factorial")) {
+      return "factorial-flowchart";
+    } else if (code.includes("for") || code.includes("while")) {
+      return "loop-flowchart";
+    } else {
+      return "generic-flowchart";
+    }
+  };
+
+  const downloadFlowchart = (format: string) => {
+    toast({
+      title: `Flowchart Downloaded as ${format}`,
+      description: `Your flowchart has been saved to your downloads folder.`,
+    });
+  };
+
+  const renderFlowchart = () => {
+    if (flowchart === "factorial-flowchart") {
+      return (
+        <div className="border border-muted-foreground/20 rounded-lg p-4 bg-white">
+          <div className="mx-auto w-fit p-4">
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Start
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Function: factorial(n)
+            </div>
+            <div className="border-2 border-primary bg-muted/20 transform rotate-45 mb-4 mx-auto w-fit p-6">
+              <div className="transform -rotate-45">
+                n == 0 || n == 1?
+              </div>
+            </div>
+            <div className="flex justify-center gap-16">
+              <div className="text-center">
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="mb-1">Yes</div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  return 1
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="mb-1">No</div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  return n * factorial(n-1)
+                </div>
+              </div>
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mt-4 mx-auto w-fit">
+              End
+            </div>
+          </div>
+        </div>
+      );
+    } else if (flowchart === "loop-flowchart") {
+      return (
+        <div className="border border-muted-foreground/20 rounded-lg p-4 bg-white">
+          <div className="mx-auto w-fit p-4">
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Start
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Initialize variables
+            </div>
+            <div className="border-2 border-primary bg-muted/20 transform rotate-45 mb-4 mx-auto w-fit p-6">
+              <div className="transform -rotate-45">
+                Loop Condition
+              </div>
+            </div>
+            <div className="flex justify-center gap-16">
+              <div className="text-center">
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="mb-1">True</div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  Loop Body
+                </div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  Update Variables
+                </div>
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="border-b-2 border-primary w-32 mx-auto"></div>
+                <div className="border-r-2 border-primary h-40 absolute -mt-40 ml-32"></div>
+                <div className="border-t-2 border-primary w-32 absolute -mt-40 ml-32"></div>
+              </div>
+              <div className="text-center">
+                <div className="border-l-2 border-primary h-6 mx-auto"></div>
+                <div className="mb-1">False</div>
+                <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
+                  Exit Loop
+                </div>
+              </div>
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mt-8 mx-auto w-fit">
+              End
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="border border-muted-foreground/20 rounded-lg p-4 bg-white">
+          <div className="mx-auto w-fit p-4">
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Start
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Process Input
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Perform Computation
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
+              Return Result
+            </div>
+            <div className="border-2 border-primary rounded-lg px-4 py-2 mt-4 mx-auto w-fit">
+              End
+            </div>
+          </div>
+        </div>
+      );
+    }
   };
 
   return (
@@ -62,7 +194,7 @@ const FlowDesigner = () => {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="Enter your code here..."
-                className="font-mono h-80 resize-none bg-code text-code-foreground"
+                className="font-mono h-80 resize-none bg-muted/30 text-foreground"
               />
             </CardContent>
           </Card>
@@ -146,47 +278,13 @@ const FlowDesigner = () => {
                 </div>
               ) : generated ? (
                 <div className="text-center w-full">
-                  <div className="border border-muted-foreground/20 rounded-lg p-4 bg-white">
-                    {/* This would be a real flowchart in the actual implementation */}
-                    <div className="mx-auto w-fit p-4">
-                      <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
-                        Start
-                      </div>
-                      <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4 mx-auto w-fit">
-                        Function: factorial(n)
-                      </div>
-                      <div className="border-2 border-primary bg-muted/20 transform rotate-45 mb-4 mx-auto w-fit p-6">
-                        <div className="transform -rotate-45">
-                          n == 0 || n == 1?
-                        </div>
-                      </div>
-                      <div className="flex justify-center gap-16">
-                        <div className="text-center">
-                          <div className="border-l-2 border-primary h-6 mx-auto"></div>
-                          <div className="mb-1">Yes</div>
-                          <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
-                            return 1
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="border-l-2 border-primary h-6 mx-auto"></div>
-                          <div className="mb-1">No</div>
-                          <div className="border-2 border-primary rounded-lg px-4 py-2 mb-4">
-                            return n * factorial(n-1)
-                          </div>
-                        </div>
-                      </div>
-                      <div className="border-2 border-primary rounded-lg px-4 py-2 mt-4 mx-auto w-fit">
-                        End
-                      </div>
-                    </div>
-                  </div>
+                  {renderFlowchart()}
                   <div className="flex justify-center mt-4 gap-2">
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={() => downloadFlowchart('PNG')}>
                       <Image className="mr-2 h-4 w-4" />
                       Save as PNG
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={() => downloadFlowchart('SVG')}>
                       <FileDown className="mr-2 h-4 w-4" />
                       Save as SVG
                     </Button>
@@ -222,25 +320,85 @@ const FlowDesigner = () => {
             </TabsContent>
             <TabsContent value="examples" className="p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button variant="outline" className="h-auto p-3 justify-start">
+                <Button variant="outline" className="h-auto p-3 justify-start" onClick={() => {
+                  setCode(`function bubbleSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}`);
+                }}>
                   <div className="text-left">
                     <h3 className="font-medium">Sorting Algorithm</h3>
                     <p className="text-xs text-muted-foreground">Bubble Sort flowchart example</p>
                   </div>
                 </Button>
-                <Button variant="outline" className="h-auto p-3 justify-start">
+                <Button variant="outline" className="h-auto p-3 justify-start" onClick={() => {
+                  setCode(`function binarySearch(arr, target) {
+  let left = 0;
+  let right = arr.length - 1;
+  
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] === target) return mid;
+    if (arr[mid] < target) left = mid + 1;
+    else right = mid - 1;
+  }
+  
+  return -1;
+}`);
+                }}>
                   <div className="text-left">
                     <h3 className="font-medium">Binary Search</h3>
                     <p className="text-xs text-muted-foreground">Binary search implementation</p>
                   </div>
                 </Button>
-                <Button variant="outline" className="h-auto p-3 justify-start">
+                <Button variant="outline" className="h-auto p-3 justify-start" onClick={() => {
+                  setCode(`function login(username, password) {
+  if (!username || !password) {
+    return { success: false, message: 'Missing credentials' };
+  }
+  
+  // Check credentials against database
+  const isValid = checkCredentials(username, password);
+  
+  if (isValid) {
+    createSession(username);
+    return { success: true, message: 'Login successful' };
+  } else {
+    return { success: false, message: 'Invalid credentials' };
+  }
+}`);
+                }}>
                   <div className="text-left">
                     <h3 className="font-medium">Login Process</h3>
                     <p className="text-xs text-muted-foreground">User authentication flow</p>
                   </div>
                 </Button>
-                <Button variant="outline" className="h-auto p-3 justify-start">
+                <Button variant="outline" className="h-auto p-3 justify-start" onClick={() => {
+                  setCode(`function processFile(filePath) {
+  // Check if file exists
+  if (!fileExists(filePath)) {
+    return { error: 'File not found' };
+  }
+  
+  // Read file contents
+  const data = readFile(filePath);
+  
+  // Process the data
+  const processedData = transformData(data);
+  
+  // Write processed data back to file
+  writeFile(filePath + '.processed', processedData);
+  
+  return { success: true, outputFile: filePath + '.processed' };
+}`);
+                }}>
                   <div className="text-left">
                     <h3 className="font-medium">File Processing</h3>
                     <p className="text-xs text-muted-foreground">Reading and writing to files</p>

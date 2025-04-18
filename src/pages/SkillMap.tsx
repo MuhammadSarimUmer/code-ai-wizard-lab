@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Brain, Award, Code2, FileJson, FilePieChart, FileTerminal, Puzzle, Terminal, FileCode2 } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
 
 // Mock data
 const skillCategories = [
@@ -52,6 +54,20 @@ const achievements = [
 const SkillMap = () => {
   const [selectedCategory, setSelectedCategory] = useState("languages");
   
+  const handlePracticeClick = (skillName: string) => {
+    toast({
+      title: `Practice ${skillName}`,
+      description: `Starting practice session for ${skillName}...`,
+    });
+  };
+
+  const handleDetailsClick = (skillName: string) => {
+    toast({
+      title: `${skillName} Details`,
+      description: `Loading detailed information for ${skillName}...`,
+    });
+  };
+  
   return (
     <div className="space-y-8">
       <div>
@@ -94,8 +110,8 @@ const SkillMap = () => {
                           </div>
                         </div>
                         <div className="mt-4 flex justify-between">
-                          <Button variant="ghost" size="sm" className="text-xs">Details</Button>
-                          <Button size="sm" className="text-xs">Practice</Button>
+                          <Button variant="ghost" size="sm" className="text-xs" onClick={() => handleDetailsClick(skill.name)}>Details</Button>
+                          <Button size="sm" className="text-xs" onClick={() => handlePracticeClick(skill.name)}>Practice</Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -125,14 +141,14 @@ const SkillMap = () => {
                     <span>Strongest Skill</span>
                     <span>Python</span>
                   </div>
-                  <Progress value={65} className="h-2 bg-muted" indicatorClassName="bg-blue-500" />
+                  <Progress value={65} className="h-2 bg-muted" />
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span>Latest Improvement</span>
                     <span>JavaScript</span>
                   </div>
-                  <Progress value={48} className="h-2 bg-muted" indicatorClassName="bg-yellow-500" />
+                  <Progress value={48} className="h-2 bg-muted" />
                 </div>
               </div>
               <div className="mt-6">
@@ -172,7 +188,10 @@ const SkillMap = () => {
                     </div>
                   </div>
                 ))}
-                <Button variant="outline" className="w-full mt-2">View All Achievements</Button>
+                <Button variant="outline" className="w-full mt-2" onClick={() => toast({
+                  title: "All Achievements",
+                  description: "Loading your achievement history..."
+                })}>View All Achievements</Button>
               </div>
             </CardContent>
           </Card>
